@@ -38,10 +38,9 @@ export default function CategoryDetail({ theme }: CategoryDetailProps) {
         />
         <StyledSection categoryColor={categoryColor}>
           <StyledName>{category.title}</StyledName>
-          <article>
-            <h3>Description</h3>
-            <p>{category.description}</p>
-          </article>
+         <StyledArticle>
+            <StyledDescription>{category.description}</StyledDescription>
+          </StyledArticle>
         </StyledSection>
       </StyledMain>
     </>
@@ -54,11 +53,12 @@ interface StyledSectionProps {
 
 const StyledMain = styled.main`
   position: relative;
-  margin-bottom: 3rem;
-
-  @media (min-width: 1024px) {
+   width: 100%;
+   min-height: 100vh;
+   padding-bottom: 4rem;
+   @media (min-width: 1024px) {
     display: flex;
-    max-width: 90rem;
+    width: 100%;
     margin: 0 auto;
   }
 `;
@@ -70,8 +70,8 @@ const StyledImage = styled(Image)`
   object-fit: cover;
 
   @media (min-width: 1024px) {
-    width: 60%;
-    height: 51.6rem;
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -79,12 +79,40 @@ const StyledSection = styled.section<StyledSectionProps>`
   padding: 1rem 2rem 2rem 2rem;
   background-color: ${({ categoryColor }) => categoryColor};
   color: ${({ theme }) => theme.infoText};
+  width: 100%;
 `;
 
 const StyledName = styled.h1`
+text-align: center;
   font-family: serif;
   font-size: 2rem;
   line-height: 2rem;
   color: ${({ theme }) => theme.formText};
   margin: 0;
+`;
+const StyledArticle = styled.article`
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.infoText};
+  @media (min-width: 1024px) {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+`;
+
+const StyledDescription = styled.p`
+  margin-top: 1rem;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  text-align: justify;
+  color: ${({ theme }) => theme.formText};
+  @media (min-width: 1024px) {
+    font-size: 1.3rem;
+    line-height: 1.9rem;
+  }
 `;

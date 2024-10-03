@@ -2,12 +2,10 @@ import { useRouter } from "next/router";
 import PlantCard from "../../components/Card";
 import Headline from "../../components/Headline";
 import styled from "styled-components";
-import ProtectedRoute from "../../components/ProtectedRoute";
-import Login from "../../components/Login";
 import BackButton from "../../components/BackButton";
 import { StyledTitle } from "../../components/Title/StyledTitle";
 import Head from "next/head";
-import { Preference } from "../../types/preference";
+import type { Preference } from "../../types/preference";
 import { Plant } from "../../types/plant";
 
 interface PreferenceProps {
@@ -25,15 +23,16 @@ export default function Preference({
   plants,
   theme,
 }: PreferenceProps) {
-
   const router = useRouter();
   const { id } = router.query;
 
   const preference = preferences.find((preference) => preference.id === id);
 
   const preferencePlants = plants.filter((plant) =>
-  preference?.preferencePlants?.some((preferencePlant) => preferencePlant._id === plant._id)
-);
+    preference?.preferencePlants?.some(
+      (preferencePlant) => preferencePlant._id === plant._id
+    )
+  );
 
   let counterMessage;
 
@@ -45,43 +44,45 @@ export default function Preference({
     preference.preferencePlants.length < plants.length
   ) {
     counterMessage = `Showing ${preference.preferencePlants.length} of ${plants.length} plants:`;
-  } else if (preference && preference.preferencePlants && preference.preferencePlants.length === (plants && plants.length)) {
+  } else if (
+    preference &&
+    preference.preferencePlants &&
+    preference.preferencePlants.length === (plants && plants.length)
+  ) {
     counterMessage = "";
   }
-  
 
   return (
     <>
       <Head>
         <title>Filtered Preferences</title>
       </Head>
-      <ProtectedRoute fallback={<Login />}>
-        <StyledButton>
-          <BackButton />
-        </StyledButton>
-        <Headline />
-        <main />
-        <StyledTitle>{preference?.preferenceTitle}</StyledTitle>
-        <StyledCounterMessage>{counterMessage}</StyledCounterMessage>
-        {preferencePlants.length === 0 ? (
-          <StyledCallText>
-            Sorry, unfortunately <StyledSpan>none</StyledSpan> of the plants
-            matched your preferences
-          </StyledCallText>
-        ) : (
-          <StyledPlantList>
-            {preferencePlants.map((plant) => (
-              <PlantCard
-                key={plant._id}
-                plant={plant}
-                onToggleFavorite={onToggleFavorite}
-                isFavorite={favorites?.includes(plant._id)}
-                theme={theme}
-              />
-            ))}
-          </StyledPlantList>
-        )}
-      </ProtectedRoute>
+
+      <StyledButton>
+        <BackButton />
+      </StyledButton>
+      <Headline />
+      <main />
+      <StyledTitle>{preference?.preferenceTitle}</StyledTitle>
+      <StyledCounterMessage>{counterMessage}</StyledCounterMessage>
+      {preferencePlants.length === 0 ? (
+        <StyledCallText>
+          Sorry, unfortunately <StyledSpan>none</StyledSpan> of the plants
+          matched your preferences
+        </StyledCallText>
+      ) : (
+        <StyledPlantList>
+          {preferencePlants.map((plant) => (
+            <PlantCard
+              key={plant._id}
+              plant={plant}
+              onToggleFavorite={onToggleFavorite}
+              isFavorite={favorites?.includes(plant._id)}
+              theme={theme}
+            />
+          ))}
+        </StyledPlantList>
+      )}
     </>
   );
 }

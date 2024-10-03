@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Headline from "../../components/Headline";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+
 import Image from "next/image";
 import { Entry } from "../../types/entry";
 
@@ -20,7 +20,7 @@ export default function EntryForm({ onFormSubmit, entry }: EntryFormProps) {
   );
   const [careTipps, setCareTipps] = useState(entry ? entry.careTipps : "");
   const [location, setLocation] = useState(entry ? entry.location : "");
-  const { status } = useSession();
+
   const [showWarning, setShowWarning] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [, setImageInputValue] = useState("");
@@ -105,55 +105,55 @@ export default function EntryForm({ onFormSubmit, entry }: EntryFormProps) {
   return (
     <>
       <Headline />
-      <main>
-        {status === "authenticated" && (
-          <StyledForm onSubmit={handleEditSubmit} onReset={handleReset}>
-            {url && (
-              <StyledDiv>
-                <StyledPreviewImage
-                  alt="imagePreview"
-                  width={100}
-                  height={100}
-                  src={url || (entry && entry.url) || "https://images.unsplash.com/photo-1477554193778-9562c28588c0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
-                />
-                <StyledImageRemoveButton
-                  type="button"
-                  onClick={handleRemoveImage}
-                >
-                  remove image
-                </StyledImageRemoveButton>
-              </StyledDiv>
-            )}
-            <StyledInput
-              type="file"
-              id="plantbuddyImage"
-              name="plantbuddyImage"
-              accept="image/*, .png, .jpeg, .jpg, .webp"
-              onChange={handleImageChange}
-            />
-            {showWarning && (
-              <StyledWarningMessage>
-                Please choose an image.
-              </StyledWarningMessage>
-            )}
-            <StyledLabel htmlFor="plantbuddyImage">Image</StyledLabel>
-            <StyledInput
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              required
-            />
-            <StyledLabel htmlFor="name">Name</StyledLabel>
-            <StyledTextarea
-              id="description"
-              name="description"
-              placeholder="Description"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-            />
+      <Wrapper>
+      <CenteredContent>
+  <StyledForm onSubmit={handleEditSubmit} onReset={handleReset}>
+    {url && (
+      <StyledDiv>
+        <StyledPreviewImage
+          alt="imagePreview"
+          width={100}
+          height={100}
+          src={url || (entry && entry.url) || "https://images.unsplash.com/photo-1477554193778-9562c28588c0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+        />
+        <StyledImageRemoveButton
+          type="button"
+          onClick={handleRemoveImage}
+        >
+          remove image
+        </StyledImageRemoveButton>
+      </StyledDiv>
+    )}
+    <StyledInput
+      type="file"
+      id="plantbuddyImage"
+      name="plantbuddyImage"
+      accept="image/*, .png, .jpeg, .jpg, .webp"
+      onChange={handleImageChange}
+    />
+    {showWarning && (
+      <StyledWarningMessage>
+        Please choose an image.
+      </StyledWarningMessage>
+    )}
+    <StyledLabel htmlFor="plantbuddyImage">Image</StyledLabel>
+    <StyledInput
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Name"
+      value={name}
+      onChange={(event) => setName(event.target.value)}
+      required
+    />
+    <StyledLabel htmlFor="name">Name</StyledLabel>
+    <StyledTextarea
+      id="description"
+      name="description"
+      placeholder="Description"
+      value={description}
+      onChange={(event) => setDescription(event.target.value)}
+    />
             <StyledLabel htmlFor="description">Description</StyledLabel>
             <StyledTextarea
               id="care"
@@ -177,8 +177,8 @@ export default function EntryForm({ onFormSubmit, entry }: EntryFormProps) {
               <StyledButton type="submit">Save</StyledButton>
             </StyledButtonContainer>
           </StyledForm>
-        )}
-      </main>
+          </CenteredContent>
+      </Wrapper>
     </>
   );
 }
@@ -287,4 +287,17 @@ const StyledWarningMessage = styled.p`
   color: ${({ theme }) => theme.primaryGreen};
   margin: -0.75rem 0 0.1rem;
   text-align: center;
+`;
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 80rem;
+`;
+
+const CenteredContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 15rem);
 `;

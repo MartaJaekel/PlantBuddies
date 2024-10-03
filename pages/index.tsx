@@ -6,7 +6,6 @@ import SortPlants from "../components/SortPlants";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import Header from "next/head";
-import Link from "next/link";
 import PlantList from "../components/PlantList";
 import { Plant } from "../types/plant";
 
@@ -43,13 +42,7 @@ export default function HomePage({
     </Header>
       <Headline />
       <StyledIconContainer status={status}>
-      <Link href="/about">
-      <Image src= {theme === "light" ? "/assets/About.svg" : "/assets/About_light-01.svg"}
-       alt="About Icon"
-       width={25}
-       height={25}>
-      </Image>
-      </Link>
+      
       <StyledThemeToggler onClick={() => toggleTheme(theme === "light" ? "dark" : "light")} status={status}>
         {theme === "light" ? (
           <Image

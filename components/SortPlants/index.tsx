@@ -99,6 +99,11 @@ const StyledLabel = styled.label`
 const StyledSelect = styled.select`
   background-color: ${({ theme }) => theme.formField};
   padding: 0.8rem 2rem;
+    appearance: none;
+ background-image: url('/assets/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1rem auto;
   border-radius: 0.4rem;
   color: ${({ theme }) => theme.formText};
   border: solid 0.8px ${({ theme }) => theme.cardBorder};

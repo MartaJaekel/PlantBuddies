@@ -4,7 +4,7 @@ import Headline from "../../components/Headline";
 import { StyledTitle } from "../../components/Title/StyledTitle";
 import BackButton from "../../components/BackButton";
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
+
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { Entry } from "../../types/entry";
@@ -14,7 +14,7 @@ interface EntryFormProps {
 };
 
 export default function EntryForm({ onFormSubmit }: EntryFormProps) {
-  const { status } = useSession();
+  
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [careTipps, setCareTipps] = useState("");
@@ -76,68 +76,69 @@ export default function EntryForm({ onFormSubmit }: EntryFormProps) {
       <StyledBackButton>
         <BackButton />
       </StyledBackButton>
-      {status === "authenticated" && (
-        <main>
-          <StyledTitle>Plant Journal</StyledTitle>
-          <StyledForm onSubmit={handleSubmit} onReset={handleReset}>
-            <StyledInput
-              type="file"
-              id="plantbuddyImage"
-              name="plantbuddyImage"
-              accept="image/*, .png, .jpeg, .jpg, .webp"
-              required
-            />
-            <StyledLabel htmlFor="plantbuddyImage">Image</StyledLabel>
-            <StyledInput
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Name"
-              onChange={(event) => setName(event.target.value)}
-              minLength={3}
-              maxLength={20}
-              required
-            />
-            <StyledLabel htmlFor="name">Name</StyledLabel>
-            <StyledLabel htmlFor="description">Description</StyledLabel>
-            <StyledTextarea
-              id="description"
-              name="description"
-              minLength={3}
-              maxLength={300}
-              placeholder="Description"
-              onChange={(event) => setDescription(event.target.value)}
-            />
-            <StyledLabel htmlFor="description">Description</StyledLabel>
-            <StyledTextarea
-              id="care"
-              name="care"
-              minLength={3}
-              maxLength={300}
-              placeholder="Care Tips"
-              onChange={(event) => setCareTipps(event.target.value)}
-            />
+      <Wrapper>
+        <CenteredContent>
+        <StyledTitle>Plant Journal</StyledTitle>
+        <StyledForm onSubmit={handleSubmit} onReset={handleReset}>
+          <StyledInput
+            type="file"
+            id="plantbuddyImage"
+            name="plantbuddyImage"
+            accept="image/*, .png, .jpeg, .jpg, .webp"
+            required
+          />
+          <StyledLabel htmlFor="plantbuddyImage">Image</StyledLabel>
+          <StyledInput
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            onChange={(event) => setName(event.target.value)}
+            minLength={3}
+            maxLength={20}
+            required
+          />
+          <StyledLabel htmlFor="name">Name</StyledLabel>
+          <StyledLabel htmlFor="description">Description</StyledLabel>
+          <StyledTextarea
+            id="description"
+            name="description"
+            minLength={3}
+            maxLength={300}
+            placeholder="Description"
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <StyledLabel htmlFor="description">Description</StyledLabel>
+          <StyledTextarea
+            id="care"
+            name="care"
+            minLength={3}
+            maxLength={300}
+            placeholder="Care Tips"
+            onChange={(event) => setCareTipps(event.target.value)}
+          />
             <StyledLabel htmlFor="care">Care</StyledLabel>
-            <StyledInput
-              type="text"
-              id="location"
-              name="location"
-              minLength={3}
-              maxLength={40}
-              placeholder="Location"
-              onChange={(event) => setLocation(event.target.value)}
-            />
-            <StyledLabel htmlFor="location">Location</StyledLabel>
-            <StyledButtonContainer>
-              <StyledButton type="reset">Cancel</StyledButton>
-              <StyledButton type="submit">Save</StyledButton>
-            </StyledButtonContainer>
-          </StyledForm>
-        </main>
-      )}
+          <StyledInput
+            type="text"
+            id="location"
+            name="location"
+            minLength={3}
+            maxLength={40}
+            placeholder="Location"
+            onChange={(event) => setLocation(event.target.value)}
+          />
+          <StyledLabel htmlFor="location">Location</StyledLabel>
+          <StyledButtonContainer>
+            <StyledButton type="reset">Cancel</StyledButton>
+            <StyledButton type="submit">Save</StyledButton>
+          </StyledButtonContainer>
+        </StyledForm>
+        </CenteredContent>
+      </Wrapper>
     </>
   );
 }
+
 
 const StyledBackButton = styled.div`
   position: fixed;
@@ -215,7 +216,7 @@ const StyledTextarea = styled.textarea`
 `;
 const StyledButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
 `;
 
 const StyledButton = styled.button`
@@ -227,4 +228,17 @@ const StyledButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   width: 9rem;
+`;
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 80rem;
+`;
+
+const CenteredContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 15rem);
 `;

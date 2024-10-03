@@ -4,8 +4,6 @@ import Headline from "../../components/Headline";
 import styled from "styled-components";
 import { StyledTitle } from "../../components/Title/StyledTitle";
 import EntryCard from "../../components/JournalEntryCard";
-import { useSession } from "next-auth/react";
-import Login from "../../components/Login";
 import Head from "next/head";
 import { Entry } from "../../types/entry";
 
@@ -15,47 +13,41 @@ interface JournalOverviewPageProps {
 }
 
 export default function JournalOverviewPage({ entries, handleDeleteEntry, }: JournalOverviewPageProps) {
-  const { status } = useSession();
-
   return (
     <>
       <Head>
         <title>Create Entry</title>
       </Head>
       <Headline />
-      <main>
+      <Wrapper>
+      <CenteredContent>
         <StyledTitle>Plant Journal</StyledTitle>
-        {status !== "authenticated" ? (
-          <Login />
-        ) : (
-          <>
-            <StyledLink href="/journal/entry">
-              <StyledButton>Create a new Entry</StyledButton>
-            </StyledLink>
-            <StyledEntriesContainer>
-              {entries.length > 0 ? (
-                entries.map((entry) => (
-                  <StyledEntries key={entry.id}>
-                    <StyledLink href={`/journal/${entry.id}`}>
-                      <EntryCard
-                        url={entry.url}
-                        entry={entry}
-                        onDeleteEntry={handleDeleteEntry}
-                      />
-                    </StyledLink>
-                  </StyledEntries>
-                ))
-              ) : (
-                <StyledParagraph>
-                  You don&apos;t have any entries yet
-                  <br />
-                  start with your first entry.
-                </StyledParagraph>
-              )}
-            </StyledEntriesContainer>
-          </>
-        )}
-      </main>
+        <StyledLink href="/journal/entry">
+          <StyledButton>Create a new Entry</StyledButton>
+        </StyledLink>
+        <StyledEntriesContainer>
+          {entries.length > 0 ? (
+            entries.map((entry) => (
+              <StyledEntries key={entry.id}>
+                <StyledLink href={`/journal/${entry.id}`}>
+                  <EntryCard
+                    url={entry.url}
+                    entry={entry}
+                    onDeleteEntry={handleDeleteEntry}
+                  />
+                </StyledLink>
+              </StyledEntries>
+            ))
+          ) : (
+            <StyledParagraph>
+              You don&apos;t have any entries yet
+              <br />
+              start with your first entry.
+            </StyledParagraph>
+          )}
+        </StyledEntriesContainer>
+        </CenteredContent>
+      </Wrapper>
     </>
   );
 }
@@ -99,4 +91,17 @@ const StyledParagraph = styled.p`
   text-align: center;
   margin-top: 50px;
   color: ${({ theme }) => theme.formText};
+`;
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 80rem;
+`;
+
+const CenteredContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 15rem);
 `;

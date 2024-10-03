@@ -5,7 +5,6 @@ import styled from "styled-components";
 import PlantCharacteristics from "../../components/PlantCharacteristics";
 import FavoriteButton from "../../components/FavoriteButton";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import BackButton from "../../components/BackButton";
 import Head from "next/head";
 import { Category } from "../../types/category";
@@ -23,7 +22,6 @@ export default function PlantDetail({
   categories,
   theme,
 }: PlantDetailProps) {
-  const { status } = useSession();
   const router = useRouter();
   const { _id } = router.query;
 
@@ -40,8 +38,11 @@ export default function PlantDetail({
   );
 
   // TODO set proper default color
-  const categoryColor: string = category ? 
-    (theme === "light" ? category?.bgcolor : category?.bgcolorDark) : "fffff";
+  const categoryColor: string = category
+    ? theme === "light"
+      ? category?.bgcolor
+      : category?.bgcolorDark
+    : "fffff";
 
   return (
     <>
@@ -50,12 +51,10 @@ export default function PlantDetail({
       </Head>
       <StyledMain>
         <BackButton />
-        {status === "authenticated" && (
-          <FavoriteButton
-            onClick={() => onToggleFavorite(plant._id)}
-            isFavorite={favorites?.includes(plant._id)}
-          />
-        )}
+        <FavoriteButton
+          onClick={() => onToggleFavorite(plant._id)}
+          isFavorite={favorites?.includes(plant._id)}
+        />
         <StyledImage
           src={plant.image}
           width={200}
@@ -157,10 +156,12 @@ interface StyledSectionProps {
 
 const StyledMain = styled.main`
   position: relative;
-
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 4rem;
   @media (min-width: 1024px) {
     display: flex;
-    max-width: 90rem;
+   
     margin: 0 auto;
   }
 `;
@@ -172,8 +173,8 @@ const StyledImage = styled(Image)`
   object-fit: cover;
 
   @media (min-width: 1024px) {
-    width: 60%;
-    height: 51.6rem;
+  
+   
   }
 `;
 
@@ -210,6 +211,7 @@ const StyledPlantCharacteristics = styled.ul`
 
 const StyledDescription = styled.article`
   color: ${({ theme }) => theme.infoText};
+  font-family: "Georgia", serif;
 `;
 
 const StyledLink = styled(Link)`

@@ -1,9 +1,7 @@
 import FilterForm from "../../../components/FilterForm";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import Login from "../../../components/Login";
 import Headline from "../../../components/Headline";
-import ProtectedRoute from "../../../components/ProtectedRoute";
 import BackButton from "../../../components/BackButton";
 import { StyledTitle } from "../../../components/Title/StyledTitle";
 import Head from "next/head";
@@ -38,22 +36,21 @@ export default function EditPreferencePage({
       <Head>
         <title>Edit Preference</title>
       </Head>
-      <ProtectedRoute fallback={<Login />}>
-        <StyledButton>
-          <BackButton />
-        </StyledButton>
-        <Headline />
-        <main>
-          <StyledTitle>Edit your Preference</StyledTitle>
-          <FilterForm
-            plants={plants}
-            preferenceFilterSettings={thisPreference?.filterSettings}
-            preferenceId={thisPreference.id}
-            preferenceFilterTitle={thisPreference?.preferenceTitle}
-            onEditPreference={onEditPreference}
-          />
-        </main>
-      </ProtectedRoute>
+
+      <StyledButton>
+        <BackButton />
+      </StyledButton>
+      <Headline />
+      <main>
+        <StyledTitle>Edit your Preference</StyledTitle>
+        <FilterForm
+          plants={plants}
+          preferenceFilterSettings={thisPreference?.filterSettings}
+          preferenceId={thisPreference.id}
+          preferenceFilterTitle={thisPreference?.preferenceTitle}
+          onEditPreference={onEditPreference}
+        />
+      </main>
     </>
   );
 }

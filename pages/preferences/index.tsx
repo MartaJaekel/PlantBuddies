@@ -1,12 +1,11 @@
 import Headline from "../../components/Headline";
 import PreferenceList from "../../components/PreferenceList";
 import FilterForm from "../../components/FilterForm";
-import Login from "../../components/Login";
-import { useSession } from "next-auth/react";
 import { StyledTitle } from "../../components/Title/StyledTitle";
 import Head from "next/head";
 import { Plant } from "../../types/plant";
 import { Preference } from "../../types/preference";
+import styled from "styled-components";
 
 interface PreferencesPageProps {
   plants: Plant[];
@@ -21,28 +20,35 @@ export default function PreferencesPage({
   handleAddPreference,
   handleDeletePreference,
 }: PreferencesPageProps) {
-  const { status } = useSession();
-
   return (
     <>
       <Head>
         <title>Add Preferences</title>
       </Head>
       <Headline />
-      <main>
+      <Wrapper>
+      <CenteredContent>
         <StyledTitle>Add your Plant Preferences</StyledTitle>
-        {status !== "authenticated" ? (
-          <Login />
-        ) : (
-          <>
-            <FilterForm plants={plants} onAddPreference={handleAddPreference} />
-            <PreferenceList
-              preferences={preferences}
-              handleDeletePreference={handleDeletePreference}
-            />
-          </>
-        )}
-      </main>
+        <FilterForm plants={plants} onAddPreference={handleAddPreference} />
+        <PreferenceList
+          preferences={preferences}
+          handleDeletePreference={handleDeletePreference}
+        />
+          </CenteredContent>
+      </Wrapper>
     </>
   );
 }
+const Wrapper = styled.div`
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 80rem;
+`;
+
+const CenteredContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 15rem);
+`;

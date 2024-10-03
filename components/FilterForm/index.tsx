@@ -223,20 +223,20 @@ const StyledForm = styled.form`
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
-  max-width: 19rem;
-  margin: 1rem auto 1rem auto;
-  padding: 0rem 0rem 2rem 0;
+  max-width: 30rem;
+  margin: 2rem auto;
+  padding: 1rem 2rem 2rem 2rem;
   border-bottom: 2px solid ${(props) => props.theme.divider};
 `;
 
 const StyledTitleInput = styled.input`
   background-color: ${({ theme }) => theme.formField};
-  padding: 0.6rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 8px;
   color: ${({ theme }) => theme.formText};
   border: solid 1px ${({ theme }) => theme.cardBorder};
   cursor: pointer;
-
+width: 100%;
   &::placeholder {
     color: ${({ theme }) => theme.formTitle};
     font-weight: 600;
@@ -263,11 +263,12 @@ const StyledSelect = styled.select`
   color: ${({ theme }) => theme.formText};
   border: solid 1px ${({ theme }) => theme.cardBorder};
   cursor: pointer;
+  width: 100%;
 `;
 
 const StyledButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+gap: 1rem;
 `;
 
 const StyledButton = styled.button`

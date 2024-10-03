@@ -103,7 +103,7 @@ const StyledDeleteButton = styled.button`
   position: absolute;
   right: 1rem;
   top: 0;
-  bottom: 0;
+  bottom: 90px;
   margin: auto 0;
   border: 0;
   background: none;
